@@ -21,110 +21,72 @@
             border-radius: 20px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.3);
         }
-        h1 {
-            color: #38bdf8;
-            font-size: 26px;
-            margin-bottom: 5px;
-        }
-        p {
-            color: #94a3b8;
-            font-size: 14px;
-            margin-bottom: 25px;
-        }
+        h1 { color: #38bdf8; font-size: 26px; margin-bottom: 5px; }
+        p { color: #94a3b8; font-size: 14px; margin-bottom: 25px; }
         .input-field {
-            width: 100%;
-            padding: 15px;
-            border-radius: 10px;
-            border: 2px solid #334155;
-            background: #0f172a;
-            color: #ffffff;
-            font-size: 16px;
-            box-sizing: border-box;
-            outline: none;
-            transition: 0.3s;
+            width: 100%; padding: 15px; border-radius: 10px;
+            border: 2px solid #334155; background: #0f172a;
+            color: #ffffff; font-size: 16px; box-sizing: border-box;
+            outline: none; transition: 0.3s;
         }
-        .input-field:focus {
-            border-color: #38bdf8;
-        }
+        .input-field:focus { border-color: #38bdf8; }
         .btn-download {
             background: linear-gradient(135deg, #38bdf8, #0284c7);
-            color: #ffffff;
-            border: none;
-            padding: 15px;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 10px;
-            width: 100%;
-            margin-top: 15px;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(56, 189, 248, 0.3);
-            transition: 0.3s;
+            color: #ffffff; border: none; padding: 15px;
+            font-size: 16px; font-weight: bold; border-radius: 10px;
+            width: 100%; margin-top: 15px; cursor: pointer;
+            box-shadow: 0 4px 10px rgba(56, 189, 248, 0.3); transition: 0.3s;
         }
-        .btn-download:hover {
-            transform: translateY(-2px);
-        }
+        .btn-download:hover { transform: translateY(-2px); }
         .loader {
-            display: none;
-            margin: 20px auto;
-            border: 4px solid #334155;
-            border-radius: 50%;
-            border-top: 4px solid #38bdf8;
-            width: 30px;
-            height: 30px;
+            display: none; margin: 20px auto;
+            border: 4px solid #334155; border-radius: 50%;
+            border-top: 4px solid #38bdf8; width: 30px; height: 30px;
             animation: spin 1s linear infinite;
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
 <div class="wrapper">
     <h1>📥 Premium Downloader</h1>
-    <p>Paste video link (TikTok, etc.) and download HD without watermark</p>
+    <p>Paste TikTok link to download HD video without watermark</p>
 
-    <input type="text" id="videoUrl" class="input-field" placeholder="Paste your link here...">
+    <input type="text" id="videoUrl" class="input-field" placeholder="Paste your TikTok link here...">
     <button class="btn-download" onclick="startDownload()">📥 Download HD (No Watermark)</button>
     <div id="loadingCircle" class="loader"></div>
 </div>
 
 <script>
-    // ⚠️ Insert your Adsterra Direct Link here
-    const adsterraLink = "https://www.YOUR_ADSTERRA_DIRECT_LINK.com";
+    // ⚠️ ՏԵՂԱԴՐԻՐ ՔՈ ԻՍԿԱԿԱՆ ADSTERRA DIRECT LINK-Ը ԱՅՍՏԵՂ
+    const adsterraLink = "https://www.effectivecpmnetwork.com/iwp3i40bja?key=1982c6aaafae8764b06cc9ef29b553ef";
 
     async function startDownload() {
         const urlInput = document.getElementById("videoUrl").value;
         
-        if (urlInput.trim() === "") {
-            alert("Please paste a valid video link.");
+        if (!urlInput.trim()) {
+            alert("Please paste a valid TikTok link.");
             return;
         }
 
         document.getElementById("loadingCircle").style.display = "block";
 
-        // 1. Instantly open the Adsterra Popunder Ad
+        // 1. Անմիջապես փորձում է բացել գովազդը նոր տաբում
         window.open(adsterraLink, '_blank');
 
         try {
-            // 2. Fetch the actual download link using a free TikTok API
+            // 2. Կանչում ենք իրական աշխատող API՝ վիդեոն առանց watermark ստանալու համար
             const response = await fetch(`https://api.tikwm.com/api/?url=${encodeURIComponent(urlInput)}`);
             const data = await response.json();
 
             document.getElementById("loadingCircle").style.display = "none";
 
             if (data && data.data && data.data.play) {
-                // 3. Trigger the actual video download file
-                const downloadUrl = data.data.play;
-                const a = document.createElement('a');
-                a.href = downloadUrl;
-                a.download = 'video.mp4';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
+                // 3. Ուղղորդում ենք բրաուզերը դեպի բեռնման ուղիղ հղումը
+                window.location.href = data.data.play;
             } else {
-                alert("Could not process this link. Please try another one.");
+                alert("Error: Invalid link or video not found. Try another link.");
             }
         } catch (error) {
             document.getElementById("loadingCircle").style.display = "none";
