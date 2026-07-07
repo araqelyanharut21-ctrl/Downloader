@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All-in-One Video Downloader</title>
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        .wrapper {
+            max-width: 450px;
+            margin: 40px auto;
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #38bdf8;
+            font-size: 26px;
+            margin-bottom: 5px;
+        }
+        p {
+            color: #94a3b8;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+        .input-field {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #334155;
+            background: #0f172a;
+            color: #ffffff;
+            font-size: 16px;
+            box-sizing: border-box;
+            outline: none;
+            transition: 0.3s;
+        }
+        .input-field:focus {
+            border-color: #38bdf8;
+        }
+        .btn-download {
+            background: linear-gradient(135deg, #38bdf8, #0284c7);
+            color: #ffffff;
+            border: none;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 10px;
+            width: 100%;
+            margin-top: 15px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(56, 189, 248, 0.3);
+            transition: 0.3s;
+        }
+        .btn-download:hover {
+            transform: translateY(-2px);
+        }
+        .loader {
+            display: none;
+            margin: 20px auto;
+            border: 4px solid #334155;
+            border-radius: 50%;
+            border-top: 4px solid #38bdf8;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+    <h1>📥 Premium Downloader</h1>
+    <p>Տեղադրիր հղումը (TikTok, Instagram, YouTube) և ներբեռնիր առանց Watermark-ի</p>
+
+    <input type="text" id="videoUrl" class="input-field" placeholder="Տեղադրիր հոլովակի հղումը այստեղ...">
+    <button class="btn-download" onclick="startDownload()">📥 Download HD (No Watermark)</button>
+    <div id="loadingCircle" class="loader"></div>
+</div>
+
+<script>
+    // ⚠️ Այստեղ տեղադրիր քո Adsterra Direct Link հղումը
+    const adsterraLink = "https://www.YOUR_ADSTERRA_DIRECT_LINK.com";
+
+    function startDownload() {
+        const urlInput = document.getElementById("videoUrl").value;
+        
+        if(urlInput.trim() === "") {
+            alert("Խնդրում ենք տեղադրել վավեր հղում։");
+            return;
+        }
+
+        document.getElementById("loadingCircle").style.display = "block";
+
+        // Ակնթարթորեն բացում է գովազդը նոր պատուհանում
+        window.open(adsterraLink, '_blank');
+
+        setTimeout(() => {
+            document.getElementById("loadingCircle").style.display = "none";
+            alert("Ֆայլի մշակումն ավարտվեց։ Ներբեռնումը կսկսվի ավտոմատ։");
+        }, 3000);
+    }
+</script>
+
+</body>
+</html>
