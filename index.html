@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="hy">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All-in-One Video Downloader</title>
+    <title>Premium Video Downloader</title>
     <style>
         body {
             background-color: #0f172a;
@@ -83,34 +83,53 @@
 
 <div class="wrapper">
     <h1>📥 Premium Downloader</h1>
-    <p>Տեղադրիր հղումը (TikTok, Instagram, YouTube) և ներբեռնիր առանց Watermark-ի</p>
+    <p>Paste video link (TikTok, etc.) and download HD without watermark</p>
 
-    <input type="text" id="videoUrl" class="input-field" placeholder="Տեղադրիր հոլովակի հղումը այստեղ...">
+    <input type="text" id="videoUrl" class="input-field" placeholder="Paste your link here...">
     <button class="btn-download" onclick="startDownload()">📥 Download HD (No Watermark)</button>
     <div id="loadingCircle" class="loader"></div>
 </div>
 
 <script>
-    // ⚠️ Այստեղ տեղադրիր քո Adsterra Direct Link հղումը
+    // ⚠️ Insert your Adsterra Direct Link here
     const adsterraLink = "https://www.YOUR_ADSTERRA_DIRECT_LINK.com";
 
-    function startDownload() {
+    async function startDownload() {
         const urlInput = document.getElementById("videoUrl").value;
         
-        if(urlInput.trim() === "") {
-            alert("Խնդրում ենք տեղադրել վավեր հղում։");
+        if (urlInput.trim() === "") {
+            alert("Please paste a valid video link.");
             return;
         }
 
         document.getElementById("loadingCircle").style.display = "block";
 
-        // Ակնթարթորեն բացում է գովազդը նոր պատուհանում
+        // 1. Instantly open the Adsterra Popunder Ad
         window.open(adsterraLink, '_blank');
 
-        setTimeout(() => {
+        try {
+            // 2. Fetch the actual download link using a free TikTok API
+            const response = await fetch(`https://api.tikwm.com/api/?url=${encodeURIComponent(urlInput)}`);
+            const data = await response.json();
+
             document.getElementById("loadingCircle").style.display = "none";
-            alert("Ֆայլի մշակումն ավարտվեց։ Ներբեռնումը կսկսվի ավտոմատ։");
-        }, 3000);
+
+            if (data && data.data && data.data.play) {
+                // 3. Trigger the actual video download file
+                const downloadUrl = data.data.play;
+                const a = document.createElement('a');
+                a.href = downloadUrl;
+                a.download = 'video.mp4';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            } else {
+                alert("Could not process this link. Please try another one.");
+            }
+        } catch (error) {
+            document.getElementById("loadingCircle").style.display = "none";
+            alert("Download failed. Please try again.");
+        }
     }
 </script>
 
